@@ -1,14 +1,10 @@
-<?php
-// Raccourcis utilisés dans le menu
-$estConnecte = isset($_SESSION['user']);
-$estAdmin    = $estConnecte && $_SESSION['user']['role'] === 'admin';
-?>
+<?php $estConnecte = isset($_SESSION['user']); ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= htmlspecialchars($pageTitle ?? 'Agenda') ?> · Agenda</title>
+    <title><?= h($pageTitle ?? 'Agenda') ?> · Agenda</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>📅</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,7 +18,7 @@ $estAdmin    = $estConnecte && $_SESSION['user']['role'] === 'admin';
             <nav class="nav">
                 <a href="index.php">Événements</a>
 
-                <?php if ($estAdmin) { ?>
+                <?php if (estAdmin()) { ?>
                     <a href="validation.php">
                         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
                         Validation
@@ -45,8 +41,8 @@ $estAdmin    = $estConnecte && $_SESSION['user']['role'] === 'admin';
 
     <main class="container">
         <?php if (isset($_SESSION['flash'])) { ?>
-            <div class="flash flash-<?= htmlspecialchars($_SESSION['flash']['type']) ?>">
-                <?= htmlspecialchars($_SESSION['flash']['message']) ?>
+            <div class="flash flash-<?= h($_SESSION['flash']['type']) ?>">
+                <?= h($_SESSION['flash']['message']) ?>
             </div>
             <?php unset($_SESSION['flash']); ?>
         <?php } ?>
